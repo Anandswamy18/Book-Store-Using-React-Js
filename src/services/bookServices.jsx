@@ -1,4 +1,4 @@
-    import { getCookie } from 'cookies-next';
+
 import axios from 'axios'
 
 const headerConfig = {
@@ -8,12 +8,7 @@ const headerConfig = {
 
     }
 };
-const token = getCookie('cookie');
-if (token) {
-    console.log('Token:', token);
-} else {
-    console.log('Token not found.');
-}
+
 
 export const getBooks = async() =>{
     let response = await axios.get("https://bookstore.incubation.bridgelabz.com/bookstore_user/get/book",headerConfig)

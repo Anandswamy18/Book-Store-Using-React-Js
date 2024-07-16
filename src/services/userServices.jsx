@@ -15,10 +15,10 @@ export const createUser= async (userObj) =>{
 }
 
 
-export const login = async (userObj) => {
+export const login = async (user) => {
     let response = await axios.post(
         "https://bookstore.incubation.bridgelabz.com/bookstore_user/login",
-        userObj
+        user
        
         
     );

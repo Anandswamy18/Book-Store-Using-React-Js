@@ -1,9 +1,10 @@
+import RoutingModule from "./RoutingModule";
 
-import Auth from '../src/Comonent/Auth'
+
 function App() {
   return (
     <div>
-      <Auth/>
+      <RoutingModule/>
     </div>
   );
 }

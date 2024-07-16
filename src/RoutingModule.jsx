@@ -4,6 +4,12 @@ import Auth from './Comonent/Auth'
 import Books from './Comonent/Books'
 import Dashboard from './Comonent/Dashboard';
 import MyCart from './Comonent/Mycart';
+import WishListContainer from './Comonent/WishListContainer';
+import MyOrdersContainer from './Comonent/MyOrdersContainer';
+import OrderPlaced from './Comonent/OrderPlaced';
+
+
+
 
 const RoutingModule = () => {
     const routes = createBrowserRouter([
@@ -25,6 +31,18 @@ const RoutingModule = () => {
                 {
                     path:"/mycart",
                     element:<MyCart/>
+                },
+                {
+                    path:"/mywishlist",
+                    element:<WishListContainer/>
+                },
+                {
+                    path:"/myoders",
+                    element:<MyOrdersContainer/>
+                },
+                {
+                    path:"/OrderPlaced",
+                    element:<OrderPlaced/>
                 }
             ]
         }

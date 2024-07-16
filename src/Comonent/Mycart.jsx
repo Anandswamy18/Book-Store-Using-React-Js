@@ -39,7 +39,8 @@ function MyCart() {
     }));
     let finalObj = { orders: arrayForHittingServer };
     let response = await orderItems(finalObj);
-    setorderPlacedRouter('/Dashoard/OrderPlaced');
+    console.log(response);
+    setorderPlacedRouter('/OrderPlaced');
   };
 
   return (
@@ -100,7 +101,7 @@ function MyCart() {
                     <OrderSummary cartInfo={cartInfo.product_id} />
                   ))}
                 </div>
-                <Link href={orderPlacedRouter}>
+                <Link to="/OrderPlaced">
                   <div className=" flex justify-end items-center">
                     <div>
                       <button

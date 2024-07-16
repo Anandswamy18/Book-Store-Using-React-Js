@@ -40,6 +40,8 @@ function Book() {
         setbook(arr.slice(bookLimit * (pagenum - 1), bookLimit * pagenum))
     }
 
+   
+
     useEffect(() => {
         loaddata()
     }, [])
@@ -59,7 +61,7 @@ function Book() {
             setFilterToggle(false);
             loaddata()
         }
-        // console.log(filterData);
+        
     }, [searchBook]);
 
     const bookData = (data) => {

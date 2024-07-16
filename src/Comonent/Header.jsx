@@ -92,8 +92,8 @@ function Header() {
                             
                         </>
                     )}
-                    <Link href="/Dashoard/MyordersCart"><MarkunreadMailboxOutlined/> My Orders</Link>
-                    <Link href="/Dashoard/Wishlist"><FavoriteBorder/> My Wishlist</Link>
+                    <Link to="/myoders"><MarkunreadMailboxOutlined/> My Orders</Link>
+                    <Link to="/mywishlist"><FavoriteBorder/> My Wishlist</Link>
                 </div>
             </Menu>
           

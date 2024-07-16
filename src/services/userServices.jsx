@@ -10,8 +10,9 @@ export const createUser= async (userObj) =>{
        
         
     )
-
+   console.log(response)
     return response;
+    
 }
 
 

@@ -77,7 +77,7 @@ function Signup() {
             return;
         }
 
-        // If validations pass, proceed with signup
+        
         let response = await createUser(user);
         console.log(response);
     }; 

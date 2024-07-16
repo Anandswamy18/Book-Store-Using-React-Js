@@ -23,7 +23,7 @@ function Header() {
         <div className='w-full h-[60px] mt-0 flex items-center bg-[#A03037] z-20 justify-around gap-20'>
             <div className="w-full md:w-[50%] flex flex-col md:flex-row items-center md:gap-[80px]">
                 <div className='h-[48px] pr-[30px] md:pr-0  ml-[130px] '>
-                    <Link href="/">
+                    <Link to="/">
                         <div className='flex gap-[5px] items-center'>
                             <img src={logo} className='w-[40px] h-[40px]' alt='Head Logo'/>
                             <p className='text-white text-2xl font-sans'>Bookstore</p>
@@ -50,7 +50,7 @@ function Header() {
                     <PersonOutline sx={{color:"white", fontSize:24}}/>
                     <p style={{ fontSize: 12, margin: 0 }}>{name}</p>
                 </div>
-                <Link href="/Dashoard/Mycart">
+                <Link to="/mycart">
                     <div className="flex flex-col items-center text-white mt-[4px]">
                         <Badge badgeContent={cartItemCount} color="primary"> 
                             <img src={cart} alt="cart" width="24px"/>
@@ -72,7 +72,7 @@ function Header() {
                     }
                     {localStorage.getItem('userName') ? (
                         <>
-                            <Link href="/profilepage"><PersonOutline/>Profile</Link>
+                            <Link to="/profilepage"><PersonOutline/>Profile</Link>
                             <Button variant="outlined" sx={{width:'150px',height:'40px',borderColor:"#A03037",color:"#A03037"}} >Logout</Button>
                         </>
                     ) : (
@@ -80,7 +80,7 @@ function Header() {
                             
                                 <div className="text-[11px] text-[#878787] mt-[-10px] mb-[10px]">
                                     To access account and manage orders
-                                    <Link href="/Authpage">
+                                    <Link to="/signup">
                                     <Button 
                                         variant="outlined" 
                                         sx={{width:'150px',height:'40px',borderColor:"#A03037",color:"#A03037",marginTop:"10px"}}

@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 function Header() {
     const [menuAnchorEl, setMenuAnchorEl] = useState(null);
     const [name, setName] = useState("Profile");
-    const [cartItemCount, setCartItemCount] = useState(0); // State for cart item count
+    const [cartItemCount, setCartItemCount] = useState(0); 
     const openMenu = Boolean(menuAnchorEl);
 
     const handleClick = (event) => {

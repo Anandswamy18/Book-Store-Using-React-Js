@@ -7,6 +7,7 @@ import MyCart from './Comonent/Mycart';
 import WishListContainer from './Comonent/WishListContainer';
 import MyOrdersContainer from './Comonent/MyOrdersContainer';
 import OrderPlaced from './Comonent/OrderPlaced';
+import ProfilePage from './Comonent/PofilePage';
 
 
 
@@ -43,6 +44,10 @@ const RoutingModule = () => {
                 {
                     path:"/OrderPlaced",
                     element:<OrderPlaced/>
+                },
+                {
+                    path:"/profile",
+                    element:<ProfilePage/>
                 }
             ]
         }

@@ -45,8 +45,8 @@ function Header() {
                     }}
                 />
             </div>
-            <div className='flex gap-10 items-center mr-[220px]'>
-                <div onClick={handleClick} className="flex flex-col items-center text-white">
+            <div className='flex gap-10 items-center mr-[220px] '>
+                <div onClick={handleClick} className="flex flex-col items-center text-white cursor-pointer">
                     <PersonOutline sx={{color:"white", fontSize:24}}/>
                     <p style={{ fontSize: 12, margin: 0 }}>{name}</p>
                 </div>

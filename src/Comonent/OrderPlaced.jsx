@@ -46,7 +46,7 @@ function OrderPlaced() {
                         <button className='bg-blue-600 text-white h-[35px] w-[200px] border-none rounded-sm pointer'>CONTINUE SHOPPING</button>
                     </Link>
                 </Item>
-            </Grid>
+            </Grid>``
             
         </Grid>
         

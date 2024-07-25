@@ -50,7 +50,7 @@ export const orderItems = async (data) => {
     return response;
   }
 
-  export const getWishList = async () => {
+  export const getWishlistItems = async () => {
     let response = await axios.get("https://bookstore.incubation.bridgelabz.com/bookstore_user/get_wishlist_items",headerConfig);
     console.log('getWishList',response)
     return response;

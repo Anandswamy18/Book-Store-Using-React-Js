@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 
 function MyOrdersContainer({ orderDetails }) {
-  // Check if orderDetails is defined
+ 
   if (!orderDetails) {
     return (
       <div className="flex flex-col min-h-screen">
@@ -26,7 +26,7 @@ function MyOrdersContainer({ orderDetails }) {
     );
   }
 
-  // Parse the JSON string to get the order details object
+  
   const order = JSON.parse(orderDetails);
 
   return (

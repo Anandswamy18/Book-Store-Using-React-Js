@@ -1,13 +1,18 @@
 import { DeleteOutline } from "@mui/icons-material";
-import {  deleteWishList } from '../services/bookServices';
+import {  deleteWishItem } from '../store/wishSlice';
 import image from '../assets/books/Image 1.png'
+import { useDispatch } from "react-redux";
+
 function WishListBook({ cartInfo, cartItem }) {
-    const bookdata = cartInfo;
+    const bookdata = cartItem;
+    const dispatch = useDispatch();
     
 
     const removeWishItem = async (id) => {
         try {
-              await deleteWishList(id);
+
+            
+              dispatch(deleteWishItem(id))
              
             
         } catch (error) {

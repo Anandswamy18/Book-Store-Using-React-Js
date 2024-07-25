@@ -9,33 +9,28 @@ import Image from '../assets/books/Image 1.png'
 import { removeCartItem } from '../services/bookServices';
 
 
+
 const Item = styled(Box)(({ theme }) => ({
     padding: theme.spacing(0),
 }));
 
-function MyCartData({ getMyCartItem, cartInfo, cartItem }) {
-    const bookdata = cartInfo
-    const RemoveCart = async (Objid) => {
-        console.log("cart id "+cartItem._id)
-        let response = await removeCartItem(Objid)
-        console.log(response);
-        getMyCartItem();
-    }
+function MyCartData({ getMyCartItem, cartInfo, cartItem,onDelete }) {
+    console.log("cartinfo",cartItem);
+    const bookdata = cartItem;
+   
+  
+   
+    // const RemoveCart = async (Objid) => {
+    //     console.log("cart id "+cartItem._id)
+    //     let response = await removeCartItem(Objid)
+    //     console.log(response);
+    //     getMyCartItem();
+    // }
 
     return (
         <Grid sx={{ display: 'flex', flexDirection: 'column' }} className='w-[774px] h-[220px]
           flex flex-col pl-[36px] pr-[27px] pt-[14px]'>
-            {/* myCard  */}
-            <Item className='w-[100%] h-[40px] flex justify-between items-center'>
-                <Typography className='text-[18px] text-slate-800'>
-                    My cart 
-                </Typography>
-                <button className='h-[40px] w-[275px] text-sm  flex justify-between items-center shadow-sm shadow-slate-700'>
-                    <LocationOnIcon className='text-red-800' />
-                    Use Current Location
-                    <ArrowDropDownIcon className='text-slate-300' />
-                </button>
-            </Item>
+            
             {/* book  */}
             <Grid sx={{display:'flex',}} className='mt-[23px]'>
                 <Item xs={12} sm={6} md={4} lg={3}>
@@ -69,7 +64,7 @@ function MyCartData({ getMyCartItem, cartInfo, cartItem }) {
             </Grid>
             <div className="ml-[105px] top-4 flex justify-between items-center  w-[15vw] text-sm">
                 <div><BookCartQuantity bookObj={cartItem} getCartItemsAndUpdte={getMyCartItem} /></div>
-                <div onClick={()=>RemoveCart(cartItem._id)} className='cursor-pointer'>Remove</div>
+                <div onClick={()=>onDelete(cartItem._id)} className='cursor-pointer'>Remove</div>
             </div>
             
         </Grid >

@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { getBooks } from '../services/bookServices';
+import { getBookList } from '../store/bookSlice';
 import { Badge, Button, Menu, TextField, InputAdornment } from "@mui/material";
 import { FavoriteBorder, MarkunreadMailboxOutlined, PersonOutline, Search } from "@mui/icons-material";
 import logo from '../assets/logo.svg';
@@ -10,19 +13,30 @@ function Header() {
     const [name, setName] = useState("Profile");
     const [cartItemCount, setCartItemCount] = useState(0); 
     const openMenu = Boolean(menuAnchorEl);
+    const dispatch = useDispatch();
 
-    const handleClick = (event) => {
+    useEffect(() => {
+        const fetchBooks = async () => {
+            let response = await getBooks();
+            let arr = response.data.result;
+            dispatch(getBookList(arr));
+        };
+
+        fetchBooks();
+    }, [dispatch]);
+
+    const handleClick = (event) => {    
         setMenuAnchorEl(event.currentTarget);
     };
 
     const handleCloseMenu = () => {
         setMenuAnchorEl(null);
     };
-
+    localStorage.removeItem('tokens'); 
     return (
         <div className='w-full h-[60px] mt-0 flex items-center bg-[#A03037] z-20 justify-around gap-20'>
             <div className="w-full md:w-[50%] flex flex-col md:flex-row items-center md:gap-[80px]">
-                <div className='h-[48px] pr-[30px] md:pr-0  ml-[130px] '>
+                <div className='h-[48px] pr-[30px] md:pr-0 ml-[130px] '>
                     <Link to="/">
                         <div className='flex gap-[5px] items-center'>
                             <img src={logo} className='w-[40px] h-[40px]' alt='Head Logo'/>
@@ -61,7 +75,7 @@ function Header() {
             </div>
             <Menu 
                 id="simple-menu" 
-                open={openMenu} 
+                open={Boolean(menuAnchorEl)} 
                 onClose={handleCloseMenu} 
                 anchorEl={menuAnchorEl}
             >
@@ -77,28 +91,27 @@ function Header() {
                         </>
                     ) : (
                         <>
-                            
-                                <div className="text-[11px] text-[#878787] mt-[-10px] mb-[10px]">
-                                    To access account and manage orders
-                                    <Link to="/signup">
+                            <div className="text-[11px] text-[#878787] mt-[-10px] mb-[10px]">
+                                To access account and manage orders
+                                <Link to="/signup">
                                     <Button 
                                         variant="outlined" 
                                         sx={{width:'150px',height:'40px',borderColor:"#A03037",color:"#A03037",marginTop:"10px"}}
                                     >
                                         LOGIN/SIGNUP
                                     </Button>
-                                    </Link>
-                                </div>
-                            
+                                </Link>
+                            </div>
                         </>
                     )}
-                    <Link to="/myoders"><MarkunreadMailboxOutlined/> My Orders</Link>
+                    <Link to="/myorders"><MarkunreadMailboxOutlined/> My Orders</Link>
                     <Link to="/mywishlist"><FavoriteBorder/> My Wishlist</Link>
                 </div>
             </Menu>
-          
         </div>
     );
 }
 
 export default Header;
+
+

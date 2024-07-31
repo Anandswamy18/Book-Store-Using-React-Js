@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import image from "../assets/books/Image 1.png"
+import image from "../assets/books/Image 1.png";
+
 function MyOrdersContainer() {
   const orderDetails = localStorage.getItem("orderDetails");
-  
+  console.log(orderDetails, "hello");
+
   if (!orderDetails) {
     return (
       <div className="flex flex-col min-h-screen">
@@ -14,9 +16,7 @@ function MyOrdersContainer() {
               <span>My Orders</span>
             </div>
             <div className="flex flex-col items-center justify-center gap-10 mt-5 min-h-[200px]">
-              <h1 className="text-xl">
-                You have not Ordered Anything!
-              </h1>
+              <h1 className="text-xl">You have not Ordered Anything!</h1>
             </div>
           </div>
         </div>
@@ -24,7 +24,10 @@ function MyOrdersContainer() {
     );
   }
 
-  const order = JSON.parse(orderDetails);
+  const parsedOrderDetails = JSON.parse(orderDetails);
+  const allOrders = parsedOrderDetails.orders.flatMap(order => 
+    order.orders.map(item => ({ ...item, order_date: order.order_date }))
+  );
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -35,7 +38,7 @@ function MyOrdersContainer() {
             <span>My Orders</span>
           </div>
           <div className="flex flex-col items-center justify-center gap-10 mt-5 min-h-[200px]">
-            {order.orders.map((orderItem, index) => (
+            {allOrders.map((orderItem, index) => (
               <div key={index} className="flex w-full p-10 h-[180px] rounded font-[Roboto] border-[#707070] border justify-between">
                 <div className="flex gap-10">
                   <img src={image} alt="" className="w-[80px] h-[100px]" />
@@ -49,7 +52,7 @@ function MyOrdersContainer() {
                   </div>
                 </div>
                 <div className="flex items-center font-bold ">
-                  <li className="text-[#26A541] text-2xl"/><span className="">Order Placed on {order.order_date}</span>
+                  <li className="text-[#26A541] text-2xl"/><span className="">Order Placed on {orderItem.order_date}</span>
                 </div>
               </div>
             ))}
@@ -61,3 +64,4 @@ function MyOrdersContainer() {
 }
 
 export default MyOrdersContainer;
+

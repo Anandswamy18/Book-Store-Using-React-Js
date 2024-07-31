@@ -64,7 +64,8 @@ function MyCart() {
   }
 }
 
-useEffect(()=>{getCartList()}
+useEffect(()=>{
+  getCartList()}
 
 ,[])
 
@@ -92,34 +93,37 @@ useEffect(()=>{getCartList()}
       const arrayForHittingServer = cartData.map((cartObj) => ({
         product_id: cartObj.cartId,
         product_name: cartObj.bookName,
-        author:cartObj.description,
+        author: cartObj.description,
         product_quantity: cartObj.quantityToBuy,
         product_price: cartObj.discountPrice,
-        original_price: cartObj.price, 
-        
+        original_price: cartObj.price,
       }));
       const finalObj = { orders: arrayForHittingServer };
-      console.log('Order Data:', finalObj);  
+      console.log('Order Data:', finalObj);
+  
       let response = await orderItems(finalObj);
-      
-      cartData.map((book)=>{removeCartItem(book.cartId);dispatch(deleteCartItem(book._id))})
+      cartData.map((book) => {
+        removeCartItem(book.cartId);
+        dispatch(deleteCartItem(book._id));
+      });
       console.log(response);
       console.log('Order Data:', finalObj);
+      const existingOrders = JSON.parse(localStorage.getItem('orderDetails'));
       
-     
       const orderDetailsWithDate = {
         ...finalObj,
-        order_date: new Date().toLocaleDateString(), 
+        order_date: new Date().toLocaleDateString(),
       };
-      localStorage.setItem("orderDetails", JSON.stringify(orderDetailsWithDate));
   
+      existingOrders.orders.push(orderDetailsWithDate);
+      localStorage.setItem('orderDetails', JSON.stringify(existingOrders));
       navigate('/OrderPlaced');
     } catch (error) {
       console.error('Error placing order:', error);
     }
   };
   
-  return (
+  return (    
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Grid className="w-[1345px] relative flex-grow ml-[100px]">
         <Grid className="w-[774px] ml-[177px] mr-[400px] pb-[114px] space-y-[10px]">

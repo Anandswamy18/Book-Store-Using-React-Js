@@ -3,10 +3,8 @@ import { Box, Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import BookCartQuantity from './BooksQuantity';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Image from '../assets/books/Image 1.png'
-import { removeCartItem } from '../services/bookServices';
+
 
 
 
@@ -15,17 +13,11 @@ const Item = styled(Box)(({ theme }) => ({
 }));
 
 function MyCartData({ getMyCartItem, cartInfo, cartItem,onDelete }) {
-    console.log("cartinfo",cartItem);
+   
     const bookdata = cartItem;
-   
-  
-   
-    // const RemoveCart = async (Objid) => {
-    //     console.log("cart id "+cartItem._id)
-    //     let response = await removeCartItem(Objid)
-    //     console.log(response);
-    //     getMyCartItem();
-    // }
+    
+    
+    
 
     return (
         <Grid sx={{ display: 'flex', flexDirection: 'column' }} className='w-[774px] h-[220px]
@@ -64,7 +56,7 @@ function MyCartData({ getMyCartItem, cartInfo, cartItem,onDelete }) {
             </Grid>
             <div className="ml-[105px] top-4 flex justify-between items-center  w-[15vw] text-sm">
                 <div><BookCartQuantity bookObj={cartItem} getCartItemsAndUpdte={getMyCartItem} /></div>
-                <div onClick={()=>onDelete(cartItem._id)} className='cursor-pointer'>Remove</div>
+                <div onClick={()=>onDelete(cartItem.cartId)} className='cursor-pointer'>Remove</div>
             </div>
             
         </Grid >

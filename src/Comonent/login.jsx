@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { login } from "../services/userServices";
-
-
+import { useNavigate } from 'react-router-dom';
 
 
 const emailRegex = /^[a-z]{3,}(.[0-9a-z]*)?@([a-z]){2,}.[a-z]*$/;
 const passwordRegex = /^.*(?=.{8,})(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=]).*$/;
 
 function Login() {
+    const nav=useNavigate()
     const [showPassword, setShowPassword] = useState(false);
     const [user, setUser] = useState({
         email: "",
@@ -58,7 +58,7 @@ function Login() {
             return;
         }
 
-        // Reset error messages if validation passes
+       
         setErrorObj({
             emailError: false,
             emailHelper: "",
@@ -71,8 +71,13 @@ function Login() {
             let response = await login(user);
             console.log(response);
             const accessToken = response.data.result.accessToken;
+           
             console.log(accessToken);
             localStorage.setItem("tokens", accessToken);
+            
+            nav("/")
+            
+           
            
         } catch (error) {
             console.error("Error logging in:", error);

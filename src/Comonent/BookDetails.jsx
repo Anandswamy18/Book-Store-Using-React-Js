@@ -11,10 +11,11 @@ import BookCartQuantity from '../Comonent/BooksQuantity';
 import { addItemsToCart } from '../store/cartSlice';
 import { addWishListItem } from '../store/wishSlice';
 import image1 from '../assets/books/Image 1.png';
+import { addCartItem, postWishList } from '../services/bookServices';
 
 const Item = styled(Box)(({ theme }) => ({
     padding: theme.spacing(0),
-}));
+}));    
 
 function BookDetails({ setToggle, bookInfo }) {
     const dispatch = useDispatch();
@@ -24,6 +25,7 @@ function BookDetails({ setToggle, bookInfo }) {
     const [isInWishlist, setIsInWishlist] = useState(false);
     const [localBookInfo, setLocalBookInfo] = useState({ ...bookInfo, quantityToBuy: 1 });
     
+    const token =localStorage.getItem("tokens")
 
     useEffect(() => {
         const isInWishlist = wishListItems.some((item) => item._id === localBookInfo._id);
@@ -32,7 +34,6 @@ function BookDetails({ setToggle, bookInfo }) {
 
     useEffect(() => {
         const itemInCart = cartItems.find((item) => item._id === localBookInfo._id);
-        console.log("itemin cart",itemInCart);
         if (itemInCart) {
             setLocalBookInfo((prev) => ({ ...prev, quantityToBuy: itemInCart.quantityToBuy }));
         } else {
@@ -40,15 +41,38 @@ function BookDetails({ setToggle, bookInfo }) {
         }
     }, [cartItems, localBookInfo._id]);
 
-    const addToCart = () => {
-       console.log(dispatch(addItemsToCart(localBookInfo))); 
-        setAddToBagToggle(false);
+    
+   
+    const addToCart = async () => {
+        if (token) {
+            try {
+                console.log("localBookInfo being sent:", localBookInfo);
+                const response = await addCartItem(localBookInfo._id);
+                if (response.status === 200) {
+                dispatch(addItemsToCart(localBookInfo));
+                    setAddToBagToggle(false);
+                }
+            } catch (error) {
+                console.error("Failed to add item to cart", error);
+            }
+        } else {
+             dispatch(addItemsToCart(localBookInfo)); 
+            setAddToBagToggle(false);
+        }
     };
+
    
     
-    const addToWishlist = () => {
+    const addToWishlist = async() => {
       console.log(dispatch(addWishListItem(localBookInfo)));  
         setIsInWishlist(true);
+
+        if(token){
+            await postWishList(localBookInfo._id)
+            dispatch(addWishListItem(localBookInfo))
+
+        }
+        
     };
 
     return (

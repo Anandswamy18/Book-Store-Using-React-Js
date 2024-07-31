@@ -10,7 +10,9 @@ const Item = styled(Box)(({ theme }) => ({
 
 function OrderSummary({ cartInfo }) {
     const bookdata = cartInfo;
-    console.log(bookdata)
+    console.log(bookdata);
+    
+   
     return (
         <Grid className='w-[774px] h-[150px] p-4'>
             {/* book  */}

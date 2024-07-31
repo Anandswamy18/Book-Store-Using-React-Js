@@ -1,13 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Grid, Box } from '@mui/material';
+import { Grid, Box, TextField, Radio, RadioGroup, FormControlLabel, FormControl } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-
+import { useSelector } from "react-redux";
 
 function ProfilePage() {
     const Item = styled(Box)(({ theme }) => ({
@@ -15,6 +10,11 @@ function ProfilePage() {
         ...theme.typography.body2,
         color: theme.palette.text.secondary,
     }));
+
+    const cartItems = useSelector((state) => state.cart.cartItems);
+
+    const user = cartItems[0]?.user_id;
+    const address = user?.address[0]; 
 
     return (
         <div className="w-full h-full flex justify-center flex-col">
@@ -31,30 +31,24 @@ function ProfilePage() {
                         <div className="w-full flex flex-col">
                             <label>Full Name</label>
                             <span className="px-5 py-2 h-[45px] border-2 rounded">
-                                {/* Full Name Value */}
+                                {user?.fullName}
                             </span>
                         </div>
                         <div className="w-full flex flex-col">
                             <label>Email Id</label>
                             <span className="px-5 py-2 h-[45px] border-2 rounded">
-                                {/* Email Id Value */}
-                            </span>
-                        </div>
-                        <div className="w-full flex flex-col">
-                            <label>Password</label>
-                            <span className="px-5 py-2 h-[45px] border-2 rounded">
-                                {/* Password Value */}
+                                {user?.email}
                             </span>
                         </div>
                         <div className="w-full flex flex-col">
                             <label>Mobile Number</label>
                             <span className="px-5 py-2 h-[45px] border-2 rounded">
-                                {/* Mobile Number Value */}
+                                {user?.phone}
                             </span>
                         </div>
                     </div>
                 </div>
-                <Grid className='w-[770px] h-[450px] pt-[40px] pl-[36px] pr-[34px] shadow-sm '>
+                <Grid className='w-[770px] h-[450px] pt-[40px] pl-[36px] pr-[34px] shadow-sm'>
                     <Item className='flex justify-between items-start h-8 mb-8' xs={12} sm={6} md={4} lg={3}>
                         <div className='text-slate-800 text-[18px] font-semibold ml-[18px]'>Address Details</div>
                         <div className='h-[35px] w-[150px] relative right-[175px] flex justify-center items-center shadow-sm shadow-red-400 text-red-400 text-xs rounded-sm '>
@@ -72,6 +66,7 @@ function ProfilePage() {
                                     required
                                     size='large'
                                     disabled
+                                    value={address?.fullAddress || ''}
                                 />
                             </Item>
                         </div>
@@ -80,12 +75,13 @@ function ProfilePage() {
                                 <label className='text-slate-800 mb-2'>City/Town</label>
                                 <Item xs={12} sm={6} md={4} lg={3}>
                                     <TextField
-                                        sx={{ height: '45px', width: '100%' }}
+                                        sx={{ height: '45px', width: '100%'}}
                                         type={'text'}
                                         variant="outlined"
                                         required
                                         size='small'
                                         disabled
+                                        value={address?.city || ''}
                                     />
                                 </Item>
                             </div>
@@ -99,6 +95,7 @@ function ProfilePage() {
                                         required
                                         size='small'
                                         disabled
+                                        value={address?.state || ''}
                                     />
                                 </Item>
                             </div>
@@ -111,9 +108,9 @@ function ProfilePage() {
                                     className='flex justify-between w-full'
                                     aria-labelledby="demo-row-radio-buttons-group-label"
                                     name="row-radio-buttons-group"
-                                    
+                                    value={address?.addressType || ''}
                                 >
-                                    <FormControlLabel  className='text-slate-800'value="Home" control={<Radio />} label="Home " disabled />
+                                    <FormControlLabel value="Home" control={<Radio />} label="Home" disabled />
                                     <FormControlLabel value="Office" control={<Radio />} label="Office" disabled />
                                     <FormControlLabel value="Other" control={<Radio />} label="Other" disabled />
                                 </RadioGroup>
@@ -127,4 +124,5 @@ function ProfilePage() {
 }
 
 export default ProfilePage;
+
 

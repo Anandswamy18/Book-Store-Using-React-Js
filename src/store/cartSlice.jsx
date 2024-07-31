@@ -28,10 +28,13 @@ const cartSlice = createSlice({
             });
         },
         deleteCartItem: (state, action) => {
-            state.cartItems = state.cartItems.filter((book) => book._id !== action.payload);
+            state.cartItems = state.cartItems.filter((book) => book.cartId!== action.payload);
+        },
+        setCartItems: (state, action) => {
+            state.cartItems = action.payload;
         }
     }
 });
 
-export const { putCartList, addItemsToCart, updateCartQuantity, deleteCartItem } = cartSlice.actions;
+export const { putCartList, addItemsToCart, updateCartQuantity, deleteCartItem,setCartItems } = cartSlice.actions;
 export default cartSlice.reducer;

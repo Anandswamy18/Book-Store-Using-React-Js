@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import MyCartData from './MyCardData';
 import AddressDetail from './AddressDetail';
 import OrderSummary from './OrderSummary';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteCartItem } from '../store/cartSlice'; 
+import { deleteCartItem, putCartList } from '../store/cartSlice'; 
 import { Link, useNavigate } from 'react-router-dom';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { orderItems } from '../services/bookServices';
+import { getCartItems, orderItems, removeCartItem } from '../services/bookServices';
+
 
 const Item = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -19,15 +20,23 @@ const Item = styled(Box)(({ theme }) => ({
 
 function MyCart() {
   const cartData = useSelector((state) => state.cart.cartItems); 
+  console.log(cartData,"cartadata");
   const token = localStorage.getItem("tokens");
+  const books = useSelector((store)=> store.books.bookList)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
   const [addressToggle, setAddressToggle] = useState(false);
   const [summaryToggle, setSummaryToggle] = useState(false);
 
-  const handleDeleteItem = (id) => {
+  const handleDeleteItem = async (id) => {
+    
+    
+    if(token){
+      await removeCartItem(id)
+    }
     dispatch(deleteCartItem(id));
+    
   };
 
   const handleAddressToggle = () => {
@@ -45,25 +54,71 @@ function MyCart() {
       navigate("/signup");
     }
   };
+  const getCartList = async()=>{
+    if(localStorage.getItem("tokens")){
+    const res = await getCartItems()
+    const cartList =res.data.result
+    const bookList = cartList.map((cartBook)=>{return{...books.filter((book)=>book._id===cartBook.product_id._id)[0],cartId:cartBook._id,quantityToBuy:cartBook.quantityToBuy,user_id:cartBook.user_id}})
+    dispatch(putCartList(bookList))
+  
+  }
+}
 
+useEffect(()=>{getCartList()}
+
+,[])
+
+  // const OrderSendData = async () => {
+  //   try {
+  //     const arrayForHittingServer = cartData.map((cartObj) => ({
+  //       product_id: cartObj.cartId,  
+  //       product_name: cartObj.bookName,  
+  //       product_quantity: cartObj.quantityToBuy,
+  //       product_price: cartObj.discountPrice, 
+  //     }));
+  //     const finalObj = { orders: arrayForHittingServer };
+  //     console.log('Order Data:', finalObj);  
+  //     let response = await orderItems(finalObj);
+  //     console.log(response);
+  //     console.log('Order Data:', finalObj);  
+  //     navigate('/OrderPlaced');
+  //   } catch (error) {
+  //     console.error('Error placing order:', error);
+      
+  //   }
+  // };
   const OrderSendData = async () => {
     try {
       const arrayForHittingServer = cartData.map((cartObj) => ({
-        product_id: cartObj.product_id?._id,  
-        product_name: cartObj.product_id?.bookName,  
+        product_id: cartObj.cartId,
+        product_name: cartObj.bookName,
+        author:cartObj.description,
         product_quantity: cartObj.quantityToBuy,
-        product_price: cartObj.product_id?.discountPrice, 
+        product_price: cartObj.discountPrice,
+        original_price: cartObj.price, 
+        
       }));
       const finalObj = { orders: arrayForHittingServer };
-      let response = await orderItems(finalObj);
       console.log('Order Data:', finalObj);  
+      let response = await orderItems(finalObj);
+      
+      cartData.map((book)=>{removeCartItem(book.cartId);dispatch(deleteCartItem(book._id))})
+      console.log(response);
+      console.log('Order Data:', finalObj);
+      
+     
+      const orderDetailsWithDate = {
+        ...finalObj,
+        order_date: new Date().toLocaleDateString(), 
+      };
+      localStorage.setItem("orderDetails", JSON.stringify(orderDetailsWithDate));
+  
       navigate('/OrderPlaced');
     } catch (error) {
       console.error('Error placing order:', error);
-      navigate('/signup');
     }
   };
-
+  
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Grid className="w-[1345px] relative flex-grow ml-[100px]">
@@ -97,7 +152,7 @@ function MyCart() {
                     key={cartInfo._id}
                     getMyCartItem={() => {}}
                     cartItem={cartInfo}
-                    onDelete={() => handleDeleteItem(cartInfo._id)}
+                    onDelete={() => handleDeleteItem(cartInfo.cartId)}
                   />
                 ))
               ) : (
@@ -139,7 +194,7 @@ function MyCart() {
                 <div className="flex flex-col justify-center items-start">
                   {cartData.length > 0 ? (
                     cartData.map((cartInfo) => (
-                      <OrderSummary key={cartInfo.product_id?._id} cartInfo={cartInfo.product_id} />
+                      <OrderSummary key={cartInfo.product_id?._id} cartInfo={cartInfo} />
                     ))
                   ) : (
                     <Typography>No items in cart.</Typography>

@@ -80,6 +80,7 @@ function Signup() {
         
         let response = await createUser(user);
         console.log(response);
+        console.log(user)
     }; 
 
     return (

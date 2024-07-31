@@ -14,10 +14,7 @@ import ProfilePage from './Comonent/PofilePage';
 
 const RoutingModule = () => {
     const routes = createBrowserRouter([
-        {
-            path: "/signup",
-            element: <Auth />,
-        },
+       
 
         
         
@@ -30,6 +27,10 @@ const RoutingModule = () => {
                 {
                     path:"",
                     element:<Books/>
+                },
+                {
+                    path: "/signup",
+                    element: <Auth />,
                 },
                 {
                     path:"/mycart",
@@ -50,7 +51,8 @@ const RoutingModule = () => {
                 {
                     path:"/profile",
                     element:<ProfilePage/>
-                }
+                },
+                
             ]
         }
         

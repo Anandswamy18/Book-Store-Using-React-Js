@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
+import porperHead from '../assets/popper_head.svg'
 const Item = styled(Box)(({ theme }) => ({
     padding: theme.spacing(0),
 }));
@@ -14,7 +15,7 @@ function OrderPlaced() {
                
             </Item>
             <Item className='flex h-[30vh] justify-center items-end  w-full' xs={12} sm={6} md={4} lg={3}>
-             <img src="/" width={100} height={100}/>
+             <img src={porperHead} width={100} height={100}/>
             </Item>
             <Item className='flex justify-center items-center w-1/2' xs={12} sm={6} md={4} lg={3}>
                 <div className='text-center w-[400px] mb-10 text-sm'>

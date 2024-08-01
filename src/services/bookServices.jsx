@@ -20,6 +20,7 @@ export const getBooks = async() =>{
 //cart Services
 
 export const addCartItem = async(data) => {
+  console.log(typeof(data));
     let response = await axios.post(`https://bookstore.incubation.bridgelabz.com/bookstore_user/add_cart_item/${data}`,data,headerConfig)
     return response
 }

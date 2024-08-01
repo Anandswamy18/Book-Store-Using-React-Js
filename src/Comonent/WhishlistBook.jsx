@@ -2,7 +2,7 @@ import { DeleteOutline } from "@mui/icons-material";
 import {  deleteWishItem } from '../store/wishSlice';
 import image from '../assets/books/Image 1.png'
 import { useDispatch } from "react-redux";
-
+import {deleteWishList} from '../services/bookServices'
 function WishListBook({ cartInfo, cartItem }) {
     const bookdata = cartItem;
     const dispatch = useDispatch();
@@ -13,6 +13,8 @@ function WishListBook({ cartInfo, cartItem }) {
 
             
               dispatch(deleteWishItem(id))
+            const res=  await deleteWishList(id)
+            console.log(res);
              
             
         } catch (error) {

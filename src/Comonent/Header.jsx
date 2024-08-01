@@ -17,6 +17,7 @@ function Header() {
     const openMenu = Boolean(menuAnchorEl);
     const books = useSelector((store)=> store.books.bookList)
     const cartItems = useSelector((store)=> store.cart.cartItems)
+    console.log(cartItems,"heder");
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -32,6 +33,8 @@ function Header() {
         fetchBooks();
     }, [dispatch]);
 
+   
+    
     const getCartList = async()=>{
         if(books.length&&token){
         const res = await getCartItems()
@@ -157,6 +160,8 @@ function Header() {
                                     </Button>
                                 </Link>
                             </div>
+                            <Link to="/mywishlist"><FavoriteBorder/> My Wishlist</Link>
+                            <Link to="/myoders"><MarkunreadMailboxOutlined/> My Orders</Link>
                         </>
                     )}
                    

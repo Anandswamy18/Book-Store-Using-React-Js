@@ -3,6 +3,10 @@ import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { login } from "../services/userServices";
 import { useNavigate } from 'react-router-dom';
+import { addCartItem,  postWishList } from '../services/bookServices';
+import { useSelector } from 'react-redux';
+
+
 
 
 const emailRegex = /^[a-z]{3,}(.[0-9a-z]*)?@([a-z]){2,}.[a-z]*$/;
@@ -11,6 +15,8 @@ const passwordRegex = /^.*(?=.{8,})(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=]).*$/;
 function Login() {
     const nav=useNavigate()
     const [showPassword, setShowPassword] = useState(false);
+    const cartItems = useSelector((store)=> store.cart.cartItems)
+    const wishListItems = useSelector((state) => state.wish.wishListItems);
     const [user, setUser] = useState({
         email: "",
         password: ""
@@ -71,10 +77,17 @@ function Login() {
             let response = await login(user);
             console.log(response);
             const accessToken = response.data.result.accessToken;
-           
-            console.log(accessToken);
             localStorage.setItem("tokens", accessToken);
-            
+            for(const item of cartItems){
+                const resItem=await addCartItem(item._id)
+                
+            }
+            for(const wish of wishListItems){
+                const resWish=await postWishList(wish._id)
+                console.log(resWish,"resWish");
+                
+            }
+
             nav("/")
             
            

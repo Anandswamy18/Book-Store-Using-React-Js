@@ -72,20 +72,33 @@ useEffect(()=>{
   // const OrderSendData = async () => {
   //   try {
   //     const arrayForHittingServer = cartData.map((cartObj) => ({
-  //       product_id: cartObj.cartId,  
-  //       product_name: cartObj.bookName,  
+  //       product_id: cartObj.cartId,
+  //       product_name: cartObj.bookName,
+  //       author:cartObj.description,
   //       product_quantity: cartObj.quantityToBuy,
-  //       product_price: cartObj.discountPrice, 
+  //       product_price: cartObj.discountPrice,
+  //       original_price: cartObj.price, 
+        
   //     }));
   //     const finalObj = { orders: arrayForHittingServer };
   //     console.log('Order Data:', finalObj);  
+     
   //     let response = await orderItems(finalObj);
+  //     cartData.map((book)=>{removeCartItem(book.cartId);dispatch(deleteCartItem(book._id))})
   //     console.log(response);
-  //     console.log('Order Data:', finalObj);  
+  //     console.log('Order Data:', finalObj);
+      
+     
+  //     const orderDetailsWithDate = {
+  //       ...finalObj,
+  //       order_date: new Date().toLocaleDateString(), 
+  //     };
+      
+  //     localStorage.setItem("orderDetails", JSON.stringify(orderDetailsWithDate));
+  
   //     navigate('/OrderPlaced');
   //   } catch (error) {
   //     console.error('Error placing order:', error);
-      
   //   }
   // };
   const OrderSendData = async () => {
@@ -108,20 +121,23 @@ useEffect(()=>{
       });
       console.log(response);
       console.log('Order Data:', finalObj);
-      const existingOrders = JSON.parse(localStorage.getItem('orderDetails'));
-      
+  
+      const existingOrders = JSON.parse(localStorage.getItem('orderDetails')) || { orders: [] };
+  
       const orderDetailsWithDate = {
         ...finalObj,
         order_date: new Date().toLocaleDateString(),
       };
   
       existingOrders.orders.push(orderDetailsWithDate);
+  
       localStorage.setItem('orderDetails', JSON.stringify(existingOrders));
       navigate('/OrderPlaced');
     } catch (error) {
       console.error('Error placing order:', error);
     }
   };
+  
   
   return (    
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>

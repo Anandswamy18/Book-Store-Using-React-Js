@@ -36,7 +36,8 @@ function BookDetails({ setToggle, bookInfo }) {
         const itemInCart = cartItems.find((item) => item._id === localBookInfo._id);
         if (itemInCart) {
             setLocalBookInfo((prev) => ({ ...prev, quantityToBuy: itemInCart.quantityToBuy }));
-        } else {
+        } 
+        else {
             setLocalBookInfo((prev) => ({ ...prev, quantityToBuy: 1 }));
         }
     }, [cartItems, localBookInfo._id]);

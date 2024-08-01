@@ -63,7 +63,8 @@ function Header() {
 
     useEffect(()=>{
         getCartList();
-        getWishList()}
+        getWishList()
+    }
     
     ,[books])
 

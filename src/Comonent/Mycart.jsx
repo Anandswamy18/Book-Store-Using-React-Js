@@ -36,6 +36,12 @@ function MyCart() {
       await removeCartItem(id)
     }
     dispatch(deleteCartItem(id));
+    try {
+      await removeCartItem(id)
+  } catch (error) {
+      console.error('Fetch error:', error);
+  }
+      
     
   };
 
@@ -54,20 +60,23 @@ function MyCart() {
       navigate("/signup");
     }
   };
-  const getCartList = async()=>{
-    if(localStorage.getItem("tokens")){
-    const res = await getCartItems()
-    const cartList =res.data.result
-    const bookList = cartList.map((cartBook)=>{return{...books.filter((book)=>book._id===cartBook.product_id._id)[0],cartId:cartBook._id,quantityToBuy:cartBook.quantityToBuy,user_id:cartBook.user_id}})
-    dispatch(putCartList(bookList))
+
+
+//   const getCartList = async()=>{
+//     if(localStorage.getItem("tokens")){
+//     const res = await getCartItems()
+//     const cartList =res.data.result
+//     const bookList = cartList.map((cartBook)=>{return{...books.filter((book)=>book._id===cartBook.product_id._id)[0],cartId:cartBook._id,quantityToBuy:cartBook.quantityToBuy,user_id:cartBook.user_id}})
+//     dispatch(putCartList(cartList))
   
-  }
-}
+//   }
+// }
 
-useEffect(()=>{
-  getCartList()}
+// useEffect(()=>{
+//   getCartList()
+// }
 
-,[])
+// ,[])
 
   // const OrderSendData = async () => {
   //   try {

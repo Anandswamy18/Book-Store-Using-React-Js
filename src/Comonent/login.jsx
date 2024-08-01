@@ -3,7 +3,7 @@ import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { login } from "../services/userServices";
 import { useNavigate } from 'react-router-dom';
-import { addCartItem,  postWishList } from '../services/bookServices';
+import { addCartItem,  modifyCartItem,  postWishList } from '../services/bookServices';
 import { useSelector } from 'react-redux';
 
 
@@ -72,7 +72,7 @@ function Login() {
             passwordHelper: "",
         });
 
-        // Proceed with login
+        
         try {
             let response = await login(user);
             console.log(response);
@@ -80,6 +80,7 @@ function Login() {
             localStorage.setItem("tokens", accessToken);
             for(const item of cartItems){
                 const resItem=await addCartItem(item._id)
+                console.log(resItem);
                 
             }
             for(const wish of wishListItems){

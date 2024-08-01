@@ -30,6 +30,7 @@ function BookCartQuantity({ setAddToBagToggle, bookObj }) {
         }
              if(token){
             const res =await modifyCartItem(bookObj._id,count)
+            console.log(res);
                 dispatch(updateCartQuantity({_id: bookObj._id, quantityToBuy:count }))
              }
         
